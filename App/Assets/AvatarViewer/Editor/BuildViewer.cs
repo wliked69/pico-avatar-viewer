@@ -89,6 +89,7 @@ public static class BuildViewer
     static Font RequireFont() {
         var font=AssetDatabase.LoadAssetAtPath<Font>("Assets/AvatarViewer/Fonts/ViewerFont.ttf");
         if(font==null)throw new Exception("Place a licensed Chinese TTF at Assets/AvatarViewer/Fonts/ViewerFont.ttf. See README.md.");
+        foreach(char character in "模型上传镜子") if(!font.HasCharacter(character)) throw new Exception("The selected UI font is missing Chinese glyphs: "+character);
         return font;
     }
     static TrackedVirtualHand CreateVirtualHand(Transform parent,string name) {

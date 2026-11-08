@@ -2,7 +2,17 @@
 
 PICO 头显独立运行的角色查看器，以及 Unity USB 模型上传和头显模型管理插件。
 
-本仓库仅包含正常版源码：查看器基线 **0.3.23**，上传插件基线 **0.3.8**。不包含任何用户模型、转换后的模型包、贴图、材质、动画、生成资源、字体、第三方 SDK 或 APK。安装后需要自行导入有权使用的模型。
+本仓库源码对应正常版：查看器基线 **0.3.23**，上传插件基线 **0.3.8**。源码树不包含任何用户模型、转换后的模型包、贴图、材质、动画、生成资源、字体二进制、第三方 SDK 或 APK。安装后需要自行导入有权使用的模型。
+
+## 下载安装包
+
+前往 [Releases](https://github.com/wliked69/pico-avatar-viewer/releases/latest)：
+
+- **AvatarViewer-0.3.23-no-models.apk**：正常版头显应用，不内置用户角色。
+- **PicoAvatarUploader-0.3.8.unitypackage**：Unity 上传和模型管理插件，导入你自己的模型工程。
+- **SHA256SUMS.txt**：下载文件的 SHA-256 校验值。
+
+APK 使用 Noto Sans SC 中文字体，字体许可证位于 APK 内的 `assets/ThirdParty/NotoSansSC-OFL.txt`，Release 也附同一许可证。安装 APK 后，再用插件通过 USB 上传你有权使用的模型；Release 不包含模型包。
 
 ## 功能
 
@@ -36,6 +46,7 @@ PICO 头显独立运行的角色查看器，以及 Unity USB 模型上传和头�
    ```
 
 3. 将有权使用的中文 TrueType 字体放到 `App/Assets/AvatarViewer/Fonts/ViewerFont.ttf`。字体和生成的本机 SDK 路径均不会提交到 Git。
+   要使用与公开 APK 一致的字体，可运行 `./Tools/Prepare-ReleaseFont.ps1`。脚本从官方固定版本下载 Noto Sans SC、校验哈希，并准备 APK 内的 OFL 许可证。
 4. 使用 Unity 2022.3.22f1 打开 `App/`，等待依赖导入完成。可通过命令行构建：
 
    ```powershell

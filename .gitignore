@@ -33,6 +33,7 @@ __pycache__/
 **/Generated/
 **/Models/
 **/StreamingAssets/
+**/StreamingAssets.meta
 **/pose-snapshot.json
 **/input-status.json
 **/runtime-status.json
