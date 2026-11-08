@@ -1,0 +1,8 @@
+<linker>
+  <!-- These MonoBehaviours are loaded from external model bundles rather than scenes. -->
+  <assembly fullname="AvatarViewer.Runtime" preserve="all" />
+  <assembly fullname="Assembly-CSharp">
+    <!-- Android's UnitySendMessage invokes this callback by name. -->
+    <type fullname="ViewerController" preserve="all" />
+  </assembly>
+</linker>

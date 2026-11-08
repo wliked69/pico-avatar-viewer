@@ -1,0 +1,27 @@
+using System;
+using System.IO;
+using System.Linq;
+using UnityEditor;
+using UnityEngine;
+
+// Compiled only inside the isolated, generated bundle project.
+public static class PicoAvatarBundleBuilder
+{
+    public static void Build()
+    {
+        var args=Environment.GetCommandLineArgs(); int index=Array.IndexOf(args,"-avatarOutput");
+        if(index<0 || index+1>=args.Length) throw new Exception("Missing -avatarOutput");
+        string output=Path.GetFullPath(args[index+1]); Directory.CreateDirectory(output);
+        AssetDatabase.Refresh();
+        const string asset="Assets/AvatarViewerExport/Generated/avatar.prefab";
+        if(AssetDatabase.LoadAssetAtPath<GameObject>(asset)==null) throw new Exception("Converted avatar prefab missing");
+        var result=BuildPipeline.BuildAssetBundles(output,new[]{new AssetBundleBuild { assetBundleName="uploaded.avatarbundle",assetNames=new[]{asset} }},BuildAssetBundleOptions.ChunkBasedCompression,BuildTarget.Android);
+        if(result==null) throw new Exception("Android bundle build failed");
+        foreach(string path in AssetDatabase.GetDependencies(asset,true).Where(p=>p.EndsWith(".shader"))) {
+            var shader=AssetDatabase.LoadAssetAtPath<Shader>(path);
+            var errors=ShaderUtil.GetShaderMessages(shader).Where(m=>m.severity.ToString()=="Error").ToArray();
+            if(errors.Length>0) throw new Exception("Avatar shader compilation failed: "+path+"\n"+string.Join("\n",errors.Select(m=>m.message)));
+        }
+        Debug.Log("PICO_AVATAR_BUNDLE_SUCCESS "+output);
+    }
+}
